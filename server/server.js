@@ -6,14 +6,7 @@ import Groq from "groq-sdk";
 
 const PORT = process.env.PORT || 5000;
 const MODEL = process.env.GROQ_MODEL || "llama-3.3-70b-versatile";
-const CLIENT_ORIGINS = [
-  "http://localhost:5173",
-  process.env.CLIENT_ORIGIN
-].filter(Boolean);
 
-app.use(cors({
-  origin: CLIENT_ORIGINS
-}));
 
 const MAX_CHARS = 12000;
 
@@ -24,6 +17,15 @@ if (!process.env.GROQ_API_KEY) {
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 const app = express();
+
+const CLIENT_ORIGINS = [
+  "http://localhost:5173",
+  process.env.CLIENT_ORIGIN
+].filter(Boolean);
+
+app.use(cors({
+  origin: CLIENT_ORIGINS
+}));
 
 
 app.use(express.json({ limit: "100kb" }));
